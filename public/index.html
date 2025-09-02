@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wareify | Revolutionizing Inventory Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS variables for consistent theming */
+        :root {
+            --primary-blue: #002b5c; /* Dark blue from your dashboard header */
+            --accent-blue: #007bff;
+            --accent-blue-dark: #0056b3;
+            --tiffany-blue: #0AC2D2;
+            --tiffany-blue-dark: #089DA8;
+            --light-bg: #eef1f7;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        .section-heading {
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-blue-dark);
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        /* Specific styles for sections */
+        .hero-section {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* For background elements */
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)); /* Subtle overlay */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero-image-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.1; /* Very subtle background image */
+        }
+
+        .hero-image-container img {
+            width: 400px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-item img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background-color: var(--light-bg);
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .how-it-works-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .how-it-works-item .step-number {
+            background-color: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .how-it-works-item img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .use-case-item {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .use-case-item:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .case-study-card {
+            background-color: var(--tiffany-blue);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .case-study-card h4 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .case-study-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .case-study-stat-item {
+            text-align: center;
+            margin: 1rem;
+        }
+
+        .case-study-stat-item p:first-child {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .case-study-stat-item p:last-child {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .testimonial {
+            font-style: italic;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            max-width: 700px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .contact-form-section {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .contact-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .contact-form-container input,
+        .contact-form-container textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .contact-form-container input::placeholder,
+        .contact-form-container textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form-container input:focus,
+        .contact-form-container textarea:focus {
+            border-color: var(--tiffany-blue);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: var(--tiffany-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--tiffany-blue-dark);
+            text-decoration: underline;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary-blue);
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-blue);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding-top: 0;
+            color: var(--light-text);
+        }
+
+        .faq-answer.open {
+            max-height: 200px; /* Adjust as needed based on content */
+            padding-top: 1rem;
+        }
+
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .footer-section h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--tiffany-blue);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--tiffany-blue);
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem 0 0 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            outline: none;
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .newsletter-form button {
+            background-color: var(--tiffany-blue);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--tiffany-blue-dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* --- NEW STYLES START HERE --- */
+
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 1rem 0;
+        }
+        .navbar.scrolled {
+            background-color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--tiffany-blue);
+        }
+        .mobile-menu {
+            display: none;
+        }
+
+        /* Scroll Animation Styles */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* --- NEW STYLES END HERE --- */
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 6rem 0;
+            }
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            .features-grid, .use-cases-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .how-it-works-grid {
+                grid-template-columns: 1fr;
+            }
+            .how-it-works-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .case-study-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            .case-study-stat-item {
+                margin: 0.5rem 0;
+            }
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+            /* --- NEW RESPONSIVE STYLES START HERE --- */
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu-button {
+                display: block;
+            }
+            .mobile-menu {
+                display: none; /* Toggled by JS */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                padding: 1rem 0;
+            }
+            .mobile-menu.open {
+                display: block;
+            }
+            /* --- NEW RESPONSIVE STYLES END HERE --- */
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">Wareify</a>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#features" class="text-white nav-link">Features</a>
+                <a href="#how-it-works" class="text-white nav-link">How It Works</a>
+                <a href="pricing.html" class="text-white nav-link">Pricing</a> <a href="#faq" class="text-white nav-link">FAQ</a>
+                <a href="#contact" class="text-white nav-link">Contact</a>
+                <a href="login.html" class="bg-white text-primary-blue hover:bg-gray-200 font-semibold px-4 py-2 rounded-md transition">Login</a>
+            </div>
+
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+            <a href="#features" class="block text-white text-center py-2 nav-link">Features</a>
+            <a href="#how-it-works" class="block text-white text-center py-2 nav-link">How It Works</a>
+            <a href="pricing.html" class="block text-white text-center py-2 nav-link">Pricing</a> <a href="#faq" class="block text-white text-center py-2 nav-link">FAQ</a>
+            <a href="#contact" class="block text-white text-center py-2 nav-link">Contact</a>
+            <a href="login.html" class="block bg-tiffany-blue text-white text-center py-2 mx-4 mt-2 rounded-md">Login</a>
+        </div>
+    </nav>
+    <section class="hero-section">
+        <div class="hero-image-container">
+            <img src="https://placehold.co/400x400/002b5c/FFFFFF?text=QR+Code+Phone" alt="QR Code Phone">
+        </div>
+        <div class="hero-content">
+            <h1 class="text-5xl font-extrabold mb-4 leading-tight">Revolutionizing Inventory Management with Blockchain & QR Codes</h1>
+            <p class="text-xl mb-8 opacity-90">Secure, transparent, and real-time tracking solution powered by blockchain technology. Authenticate products instantly and maintain tamper-proof records.</p>
+            <a href="login.html" class="btn-primary text-xl px-8 py-4">Get Started Now</a>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-lg">
+                <div class="flex flex-col items-center">
+                    <p class="font-bold text-3xl">✔</p>
+                    <p class="mt-2 font-semibold">Tamper-Proof Records</p>
+                    <p class="text-sm opacity-80 mt-1">Leverage blockchain technology to create immutable records for your inventory, ensuring data integrity and trust.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p class="font-bold text-3xl">⏱️</p>
+                    <p class="mt-2 font-semibold">Real-Time Tracking</p>
+                    <p class="text-sm opacity-80 mt-1">Monitor your products throughout the supply chain with instant updates and location tracking.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p class="font-bold text-3xl">✅</p>
+                    <p class="mt-2 font-semibold">Seamless Authentication</p>
+                    <p class="text-sm opacity-80 mt-1">Verify product authenticity instantly using QR codes linked to blockchain records.</p>
+                </div>
+            </div>
+
+            <div id="stats-counter" class="mt-16 flex justify-center items-center gap-12 text-2xl font-bold">
+                <div class="text-center">
+                    <p class="text-4xl" data-target="100">0</p>
+                    <p class="text-base opacity-80">Successful Authentications</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl" data-target="500">0</p>
+                    <p class="text-base opacity-80">Products Tracked</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl" data-target="10">0</p>
+                    <p class="text-base opacity-80">Active Partners</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 px-4 max-w-7xl mx-auto fade-in-section">
+        <h3 class="text-4xl section-heading text-center mb-12">Revolutionary Blockchain Inventory Management</h3>
+        <p class="text-lg text-center max-w-3xl mx-auto mb-16 text-gray-700">Transform your inventory management with blockchain technology. Secure, transparent, and efficient solutions for modern businesses.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=Security" alt="Blockchain Security Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Blockchain-Powered Security</h4>
+                <p class="text-gray-600">Immutable and tamper-proof records ensure the highest level of security for your inventory data.</p>
+            </div>
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=QR+Code" alt="QR Code Verification Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">QR Code-Based Verification</h4>
+                <p class="text-gray-600">Instantly verify product authenticity with simple QR code scanning technology.</p>
+            </div>
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=Tracking" alt="Real-time Tracking Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Real-Time Tracking</h4>
+                <p class="text-gray-600">Monitor inventory movements and updates in real-time across your entire supply chain.</p>
+            </div>
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=Contracts" alt="Smart Contracts Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Smart Contracts</h4>
+                <p class="text-gray-600">Automate processes and reduce errors with self-executing smart contracts.</p>
+            </div>
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=Integration" alt="Seamless Integration Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Seamless Integration</h4>
+                <p class="text-gray-600">Easy integration with existing ERP and inventory management systems.</p>
+            </div>
+            <div class="card flex flex-col items-center text-center p-6">
+                <img src="https://placehold.co/80x80/002b5c/FFFFFF?text=Mobile" alt="Mobile Access Icon" class="mb-4">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Mobile Access</h4>
+                <p class="text-gray-600">Access your inventory system from anywhere using our mobile-optimized platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison" class="py-20 px-4 max-w-7xl mx-auto fade-in-section">
+        <h3 class="text-4xl section-heading text-center mb-12">Comparison: Traditional vs Blockchain Inventory</h3>
+        <div class="overflow-x-auto">
+            <table class="comparison-table card">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Traditional System</th>
+                        <th>Blockchain System</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data Security</td>
+                        <td>Vulnerable to tampering</td>
+                        <td>Immutable & secure</td>
+                    </tr>
+                    <tr>
+                        <td>Real-time Tracking</td>
+                        <td>Delayed updates</td>
+                        <td>Instant updates</td>
+                    </tr>
+                    <tr>
+                        <td>Automation</td>
+                        <td>Manual processing</td>
+                        <td>Smart contracts</td>
+                    </tr>
+                    <tr>
+                        <td>Transparency</td>
+                        <td>Limited visibility</td>
+                        <td>Complete transparency</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-20 px-4 max-w-7xl mx-auto fade-in-section">
+        <h3 class="text-4xl section-heading text-center mb-12">Understanding Blockchain Inventory System</h3>
+        <div class="how-it-works-grid">
+            <div class="how-it-works-item card">
+                <span class="step-number">1</span>
+                <img src="https://placehold.co/200x150/002b5c/FFFFFF?text=Manufacturer+Registers" alt="Manufacturer Registers Product">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Manufacturer Registers Product</h4>
+                <p class="text-gray-600">Manufacturers securely enter product details including price, location, and stock status directly onto the blockchain. This creates an immutable record that serves as the foundation for the entire supply chain.</p>
+            </div>
+            <div class="how-it-works-item card">
+                <span class="step-number">2</span>
+                <img src="https://placehold.co/200x150/002b5c/FFFFFF?text=QR+Code+Generation" alt="QR Code Generation">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">QR Code Generation</h4>
+                <p class="text-gray-600">Each product receives a unique QR code that links directly to its blockchain data. This creates a traceable digital identity for every item in the inventory system.</p>
+            </div>
+            <div class="how-it-works-item card">
+                <span class="step-number">3</span>
+                <img src="https://placehold.co/200x150/002b5c/FFFFFF?text=Real-time+Updates" alt="Real-time Inventory Updates">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Real-time Inventory Updates</h4>
+                <p class="text-gray-600">Retailers and suppliers can update inventory levels in real-time, ensuring accurate stock information across the entire supply chain network.</p>
+            </div>
+            <div class="how-it-works-item card">
+                <span class="step-number">4</span>
+                <img src="https://placehold.co/200x150/002b5c/FFFFFF?text=Consumer+Auth" alt="Consumer Authentication">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Consumer Authentication</h4>
+                <p class="text-gray-600">Consumers can easily verify product authenticity by scanning the QR code, accessing the complete product history and supply chain journey.</p>
+            </div>
+            <div class="how-it-works-item card">
+                <span class="step-number">5</span>
+                <img src="https://placehold.co/200x150/002b5c/FFFFFF?text=Smart+Contracts" alt="Smart Contracts">
+                <h4 class="text-xl font-semibold mb-2 text-primary-blue">Smart Contracts</h4>
+                <p class="text-gray-600">Automated smart contracts handle transactions and inventory updates, reducing errors and preventing fraud through blockchain verification.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="py-20 px-4 max-w-7xl mx-auto fade-in-section">
+        <h3 class="text-4xl section-heading text-center mb-12">Blockchain Inventory Solutions in Action</h3>
+        <p class="text-lg text-center max-w-3xl mx-auto mb-16 text-gray-700">Real-world applications transforming supply chain management across multiple industries.</p>
+        <div class="use-cases-grid mb-16">
+            <div class="use-case-item card">Retail & E-commerce</div>
+            <div class="use-case-item card">Manufacturing</div>
+            <div class="use-case-item card">Pharmaceuticals</div>
+            <div class="use-case-item card">Luxury Goods</div>
+            <div class="use-case-item card">Logistics</div>
+        </div>
+        <div class="case-study-card">
+            <h4 class="text-white">How GlobalMart Achieved 40% Reduction in Stockouts</h4>
+            <div class="case-study-stats">
+                <div class="case-study-stat-item">
+                    <p>40%</p>
+                    <p>Reduction in Stockouts</p>
+                </div>
+                <div class="case-study-stat-item">
+                    <p>6 months</p>
+                    <p>ROI within</p>
+                </div>
+                <div class="case-study-stat-item">
+                    <p>95%</p>
+                    <p>Employee Adoption Rate</p>
+                </div>
+                <div class="case-study-stat-item">
+                    <p>$2.5M</p>
+                    <p>Annual Savings</p>
+                </div>
+            </div>
+            <p class="testimonial mt-8">"Implementing blockchain inventory solutions has revolutionized our multi-channel retail operations. We've seen a 40% reduction in stockouts and significantly improved customer satisfaction."</p>
+            <p class="testimonial-author">- Sarah Johnson, Supply Chain Director, GlobalMart</p>
+            <a href="#" class="btn-primary mt-8 bg-white text-tiffany-blue hover:bg-gray-100">Download Full Report</a>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-form-section">
+        <h3 class="text-4xl font-extrabold mb-4">Ready to Transform Your Inventory Management?</h3>
+        <p class="text-lg opacity-90 mb-8">Get in touch with our experts to discuss your specific needs</p>
+        <div class="contact-form-container">
+            <form action="#" method="POST">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="company" placeholder="Company">
+                <textarea name="message" rows="5" placeholder="Message"></textarea>
+                <button type="submit" class="btn-primary w-full">Send Message</button>
+            </form>
+            <div class="contact-info mt-8">
+                <p><strong>Contact Information</strong></p>
+                <p>+7 (555) 123-4567</p>
+                <p><a href="mailto:sales@blockchaininventory.com">sales@blockchaininventory.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 px-4 max-w-5xl mx-auto fade-in-section">
+        <h3 class="text-4xl section-heading text-center mb-12">Frequently Asked Questions</h3>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question text-primary-blue">
+                    How secure is the blockchain inventory system?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our blockchain system uses advanced cryptography and distributed ledger technology to ensure maximum security. Each transaction is verified by multiple nodes, making it virtually impossible to tamper with records.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question text-primary-blue">
+                    What are the implementation requirements?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Implementation requires minimal hardware investment. You'll need internet connectivity, smart devices for QR scanning, and our software suite. We provide full training and support throughout the setup process.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question text-primary-blue">
+                    How does this improve inventory management?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>The system provides real-time tracking, automated updates, and complete transparency across the supply chain. This reduces errors, prevents stockouts, and improves overall efficiency by up to 40%.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-16 px-4">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li> <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#how-it-works">How it works?</a></li> <li><a href="#">Security measures</a></li>
+                    <li><a href="#">Integration process</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p class="text-sm opacity-80 mb-4">Stay updated with our latest features and releases</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom mt-12">
+            &copy;2025 Wareify. All rights reserved. </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- NEW NAVBAR SCRIPT START ---
+            const navbar = document.getElementById('navbar');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Sticky navbar on scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Toggle mobile menu
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+            // --- NEW NAVBAR SCRIPT END ---
+
+
+            // --- FAQ Accordion (Your Original Script) ---
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const plusSign = question.querySelector('span');
+
+                    // Close other open answers
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== question) {
+                            otherQuestion.nextElementSibling.classList.remove('open');
+                            otherQuestion.querySelector('span').textContent = '+';
+                        }
+                    });
+
+                    // Toggle current answer
+                    answer.classList.toggle('open');
+                    plusSign.textContent = answer.classList.contains('open') ? '-' : '+';
+                });
+            });
+
+
+            // --- NEW SCROLL ANIMATION SCRIPT START ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const statsCounter = document.getElementById('stats-counter');
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        
+                        // If the stats counter is intersecting, start the animation
+                        if(entry.target.id === 'stats-counter' || entry.target.contains(statsCounter)) {
+                            animateCounters();
+                            observer.unobserve(entry.target); // Animate only once
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+            // Observe the hero section specifically for the counter
+            sectionObserver.observe(document.querySelector('.hero-section'));
+
+            // --- NEW ANIMATED COUNTER SCRIPT START ---
+            function animateCounters() {
+                const counters = statsCounter.querySelectorAll('[data-target]');
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000; // 2 seconds
+                    const increment = target / (duration / 16); // Calculate increment for smooth animation
+
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current) + '+';
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target + '+';
+                        }
+                    };
+                    requestAnimationFrame(updateCounter);
+                });
+            }
+             // --- NEW SCROLL ANIMATION & COUNTER SCRIPT END ---
+        });
+    </script>
+</body>
+</html>

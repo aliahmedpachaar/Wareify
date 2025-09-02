@@ -1,0 +1,926 @@
+/* staff-dashboard.css */
+
+/* --- Root Variables for easy theme switching --- */
+:root {
+    --bg-color: #f5f7fa; /* Light background */
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --header-bg: #2c3e50; /* Dark blue */
+    --sidebar-bg: #34495e; /* Slightly lighter dark blue */
+    --accent-blue: #3498db; /* Primary blue for highlights */
+    --accent-blue-hover: #2980b9;
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --border-color: #e0e0e0;
+
+    /* Status Colors (slightly adjusted for aesthetics) */
+    --status-active-bg: #e0ffe0; /* Light green */
+    --status-active-text: #28a745;
+    --status-low-bg: #fffbe0; /* Light yellow */
+    --status-low-text: #f39c12;
+
+    /* Transaction Badges */
+    --badge-completed-bg: #d4edda;
+    --badge-completed-text: #1a7f37;
+    --badge-pending-bg: #fff3cd;
+    --badge-pending-text: #856404;
+    --badge-transit-bg: #d1ecf1;
+    --badge-transit-text: #0c5460;
+
+    /* NEW/ADJUSTED: Sidebar Link Colors for button-like appearance (matching admin) */
+    --sidebar-link-bg: #2b5791; /* A distinct blue for sidebar buttons (lighter than sidebar-bg) */
+    --sidebar-link-hover-bg: #3c72c0; /* Darker blue on hover */
+    --sidebar-link-text: white; /* Text color for sidebar buttons */
+    --sidebar-link-active-bg: #007bff; /* Accent blue for active link */
+    --sidebar-link-active-text: white;
+
+    /* NEW: Search Button Colors (matching admin) */
+    --search-button-bg: #007bff; /* Light blue (accent-blue) */
+    --search-button-hover-bg: #0056b3; /* Darker blue on hover */
+    --clear-button-bg: #6c757d; /* Grey for clear */
+    --clear-button-hover-bg: #5a6268; /* Darker grey on hover */
+
+    /* NEW: Modal Colors */
+    --modal-primary-blue: #002b5c; /* Dark blue for modal titles */
+}
+
+/* --- Dark Mode Variables --- */
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg-color: #1a202c;
+        --card-bg: #2d3748;
+        --text-color: #e2e8f0;
+        --header-bg: #1a202c;
+        --sidebar-bg: #2d3748;
+        --accent-blue: #63b3ed; /* Lighter blue for dark mode */
+        --accent-blue-hover: #4299e1;
+        --shadow-light: rgba(0, 0, 0, 0.2);
+        --shadow-medium: rgba(0, 0, 0, 0.4);
+        --border-color: #4a5568;
+
+        --status-active-bg: #2d4c3a;
+        --status-active-text: #5cb85c;
+        --status-low-bg: #4f4100;
+        --status-low-text: #ffc107;
+
+        --badge-completed-bg: #2d4c3a;
+        --badge-completed-text: #5cb85c;
+        --badge-pending-bg: #4f4100;
+        --badge-pending-text: #ffc107;
+        --badge-transit-bg: #2a5a6a;
+        --badge-transit-text: #63b3ed;
+
+        /* NEW/ADJUSTED: Dark Mode Sidebar Link Colors (matching admin) */
+        --sidebar-link-bg: #3c5d8a;
+        --sidebar-link-hover-bg: #4f72ad;
+        --sidebar-link-text: #e2e8f0;
+        --sidebar-link-active-bg: #4299e1;
+        --sidebar-link-active-text: #e2e8f0;
+
+        /* NEW: Dark Mode Search Button Colors (matching admin) */
+        --search-button-bg: #63b3ed;
+        --search-button-hover-bg: #4299e1;
+        --clear-button-bg: #4a5568;
+        --clear-button-hover-bg: #3a414e;
+
+        /* NEW: Modal Colors for Dark Mode */
+        --modal-primary-blue: #63b3ed; /* Use dark mode accent blue for titles */
+    }
+}
+
+/* --- Base Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add/Modify this in public/css/dashboard.css and public/css/staff-dashboard.css */
+
+.logout-button {
+    background-color: #e74c3c !important; /* Red color for logout */
+    color: white !important;
+    margin-top: auto; /* Pushes the button to the bottom if sidebar is a flex container */
+    width: 100%; /* Make it full width of the sidebar button area */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important; /* Subtle shadow */
+    text-align: center; /* Center the text/icon */
+    padding: 14px 20px; /* Match other sidebar links */
+    border-radius: 8px; /* Match other sidebar links */
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 0; /* Remove bottom margin if it's the last item */
+}
+
+.logout-button:hover {
+    background-color: #c0392b !important; /* Darker red on hover */
+    transform: translateY(-2px); /* Maintain hover effect */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+}
+
+/* Also, ensure your .sidebar itself is set up as a flex container */
+.sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 220px;
+    height: calc(100% - 80px); /* This is crucial for margin-top: auto to work */
+    background-color: var(--sidebar-bg);
+    padding: 25px 20px;
+    box-shadow: 4px 0 12px var(--shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    /* Add these two lines to make the sidebar a flex container */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+/* For dark mode, if you have it */
+@media (prefers-color-scheme: dark) {
+    body .logout-button { /* Target the logout button specifically in dark mode */
+        background-color: #c0392b !important; /* Slightly darker red in dark mode */
+    }
+    body .logout-button:hover {
+        background-color: #a02c20 !important;
+    }
+}
+/* --- Header --- */
+header {
+    background-color: var(--header-bg);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px var(--shadow-medium); /* More prominent header shadow */
+    height: 80px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header img {
+    height: 45px;
+}
+
+header h1 {
+    font-size: 22px;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between toggle and bell */
+}
+
+.notification-bell {
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.notification-bell:hover {
+    transform: scale(1.1);
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 220px; /* Wider sidebar */
+    height: calc(100% - 80px);
+    background-color: var(--sidebar-bg);
+    padding: 25px 20px; /* Increased padding */
+    box-shadow: 4px 0 12px var(--shadow-light); /* Subtle shadow on side */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* MODIFIED: Sidebar A link styling for consistent button look (matching admin) */
+.sidebar a {
+    display: flex; /* Crucial for icon and text alignment */
+    align-items: center; /* Vertically center icon and text */
+    gap: 10px; /* Space between icon and text */
+    padding: 14px 20px; /* Consistent padding */
+    margin-bottom: 10px; /* Space between links */
+    color: var(--sidebar-link-text); /* Uses the new variable for text color */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--sidebar-link-bg); /* Uses the new variable for button background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for "boundaries" look */
+    text-align: left; /* Aligned text to left, important for the flex layout */
+}
+
+.sidebar a:hover {
+    background-color: var(--sidebar-link-hover-bg); /* Darker blue on hover */
+    color: var(--sidebar-link-text); /* Keep text color same or adjust with another variable */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Main Content --- */
+.main-content {
+    margin-left: 220px; /* Must match sidebar width */
+    margin-top: 80px; /* Must match header height */
+    padding: 30px 40px; /* Generous padding */
+    width: 100%;
+    flex-grow: 1;
+}
+
+.welcome {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 35px; /* More space */
+    transition: color 0.3s ease;
+}
+
+/* --- Card Grid Layouts --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px; /* Generous gap between cards */
+    margin-bottom: 40px; /* Space below stats cards */
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Chart takes 2/3, transactions 1/3 */
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.products-section {
+    margin-bottom: 40px; /* Space above footer */
+}
+
+/* --- Card Styling (Floating Effect) --- */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 12px; /* Softer rounded corners */
+    padding: 30px; /* Generous padding inside cards */
+    box-shadow: 0 8px 20px var(--shadow-light); /* Pronounced, soft shadow for floating */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    overflow: hidden; /* Ensures content stays within rounded corners */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lifts more on hover */
+    box-shadow: 0 12px 25px var(--shadow-medium); /* Stronger shadow on hover */
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+/* --- Stat Cards Specific --- */
+.stat-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px; /* Ensure consistent height */
+}
+
+.stat-card p {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent-blue); /* Numbers in accent blue */
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+/* --- Chart Section --- */
+.chart-section .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-details {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 250px; /* Constrain chart size for aesthetics */
+    height: 250px;
+    margin: 0 auto;
+}
+
+#stockChart {
+    /* Chart.js canvas handles responsiveness */
+}
+
+/* --- Transactions Section --- */
+.transactions h3 {
+    margin-bottom: 20px;
+}
+
+.transactions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.transactions li {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.transactions li:last-child {
+    border-bottom: none;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px; /* More rounded, pill-like */
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.completed {
+    background-color: var(--badge-completed-bg);
+    color: var(--badge-completed-text);
+}
+
+.pending {
+    background-color: var(--badge-pending-bg);
+    color: var(--badge-pending-text);
+}
+
+.transit {
+    background-color: var(--badge-transit-bg);
+    color: var(--badge-transit-text);
+}
+
+/* --- Products Table --- */
+.products-section .card {
+    /* The general .card padding should apply to it now */
+}
+
+/* NEW: Wrapper for heading and search bar (matching admin) */
+.products-header {
+    display: flex;
+    justify-content: space-between; /* Pushes content to ends */
+    align-items: center; /* Vertically aligns items */
+    margin-bottom: 20px; /* Space between header/search and table */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px; /* Space between heading and search bar when wrapped */
+}
+
+.products-section h3 {
+    margin-bottom: 0; /* Remove default bottom margin from h3 */
+    flex-shrink: 0; /* Prevent heading from shrinking too much */
+}
+
+/* MODIFIED: Search Bar Container (matching admin) */
+.search-bar-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap; /* Keep search input and buttons on one line by default */
+    margin-bottom: 0; /* Remove bottom margin here, handled by products-header */
+    flex-grow: 1; /* Allow search bar to take available space */
+    justify-content: flex-end; /* Push search bar to the right within its container */
+    max-width: 400px; /* Limit max width for aesthetic */
+}
+
+/* MODIFIED: Search Input Style (matching admin) */
+.search-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 25px; /* More rounded, pill-like */
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.search-input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+/* MODIFIED: Search Button Style (matching admin) */
+.search-button, .clear-search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px; /* Round rectangle */
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+    color: white; /* Ensure text is white */
+}
+
+.search-button {
+    background-color: var(--search-button-bg); /* Light blue color */
+}
+
+.search-button:hover {
+    background-color: var(--search-button-hover-bg); /* Darker blue on hover */
+    transform: translateY(-1px);
+}
+
+.clear-search-button {
+    background-color: var(--clear-button-bg); /* Grey color for clear button */
+}
+
+.clear-search-button:hover {
+    background-color: var(--clear-button-hover-bg); /* Darker grey on hover */
+    transform: translateY(-1px);
+}
+
+/* Dark mode adjustments for search bar (matching admin) */
+@media (prefers-color-scheme: dark) {
+    body .search-input {
+        background-color: var(--sidebar-bg); /* Darker background for input */
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+    body .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+    body .search-button {
+        background-color: var(--search-button-bg); /* Use dark mode accent blue */
+    }
+    body .search-button:hover {
+        background-color: var(--search-button-hover-bg);
+    }
+    body .clear-search-button {
+        background-color: var(--clear-button-bg);
+    }
+    body .clear-search-button:hover {
+        background-color: var(--clear-button-hover-bg);
+    }
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* Remove top margin, card padding handles spacing */
+    background-color: var(--card-bg); /* Ensure table background matches card */
+}
+
+th, td {
+    padding: 15px 0px; /* Adjust horizontal padding as needed within the card. Vertically, keep it consistent. */
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+/* Make sure the first and last columns have horizontal padding */
+th:first-child, td:first-child {
+    padding-left: 0px; /* Aligned with card padding */
+}
+
+th:last-child, td:last-child {
+    padding-right: 0px; /* Aligned with card padding */
+}
+
+
+th {
+    background-color: transparent; /* Make header background transparent to blend with card */
+    color: var(--text-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add hover effect for table rows */
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: var(--bg-color); /* Subtle highlight on hover */
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Rectangular Product Image in Table */
+.product-image-cell {
+    width: 80px; /* Fixed width for image column */
+    text-align: center;
+}
+.product-image-cell img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 4px; /* Slightly rounded corners for rectangles */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-light);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Status Badges */
+.status {
+    padding: 6px 12px;
+    border-radius: 20px; /* Pill shape */
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.status.active {
+    background-color: var(--status-active-bg);
+    color: var(--status-active-text);
+}
+
+.status.low {
+    background-color: var(--status-low-bg);
+    color: var(--status-low-text);
+}
+
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-size: 14px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- Theme Toggle Button Styling --- */
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white; /* Default color in light mode header */
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* ================================================= */
+/* --- RESPONSIVE ADJUSTMENTS --- */
+/* ================================================= */
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 1fr; /* Stack chart and transactions on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
+    }
+    .main-header {
+        margin-bottom: 10px;
+    }
+    .header-actions {
+        margin-top: 10px;
+    }
+    .sidebar {
+        position: static; /* Allow sidebar to flow with content */
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        box-shadow: none;
+        top: auto;
+        left: auto;
+        /* Added for horizontal layout on mobile */
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .sidebar a {
+        display: inline-flex; /* Changed to inline-flex to maintain alignment */
+        align-items: center; /* Ensures content is centered vertically */
+        justify-content: center; /* Centers the icon/text horizontally within the button */
+        margin: 5px;
+        width: calc(50% - 10px); /* Two buttons per row */
+        padding: 10px 15px; /* Adjust padding for smaller buttons on mobile */
+    }
+    .main-content {
+        margin-left: 0;
+        margin-top: 0;
+        padding: 20px;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Smaller cards on mobile */
+        gap: 15px;
+    }
+    .card {
+        padding: 20px; /* Smaller padding on mobile */
+    }
+    .card h3 {
+        font-size: 16px;
+    }
+    .stat-card p {
+        font-size: 28px;
+    }
+    table {
+        font-size: 12px; /* Smaller font for tables on mobile */
+    }
+    th, td {
+        padding: 10px 15px; /* Smaller padding */
+    }
+    .products-section h3 {
+        padding: 20px 0 0; /* Adjust heading padding */
+    }
+    .product-image-cell {
+        width: 60px;
+    }
+    .product-image-cell img {
+        height: 40px;
+        width: 40px;
+    }
+}
+
+/* NEW: Styles for Product Details Modal (Copied from dashboard.css) */
+
+/* Blur effect for main content */
+.main-content.blurred {
+    filter: blur(5px); /* Adjust blur strength as needed */
+    pointer-events: none; /* Disable interactions on blurred content */
+    user-select: none; /* Prevent text selection */
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above everything else */
+    backdrop-filter: blur(3px); /* Subtle blur for the overlay itself */
+    animation: fadeInModal 0.3s ease-out forwards;
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: var(--card-bg); /* Use card background for consistency */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    max-width: 600px; /* Max width for the modal */
+    width: 90%; /* Responsive width */
+    position: relative;
+    transform: scale(0.9); /* Initial scale for pop-in animation */
+    animation: scaleIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Pop-in effect */
+    max-height: 90vh; /* Limit height for scrollable content */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    color: var(--text-color); /* Ensure text color is readable */
+}
+
+/* Modal Close Button */
+.modal-close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2.5em; /* Larger X icon */
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close-button:hover {
+    color: #333;
+    transform: rotate(90deg);
+}
+
+/* Modal Product Image */
+.modal-product-image {
+    display: block;
+    max-width: 150px; /* Smaller image in modal */
+    height: auto;
+    margin: 0 auto 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+/* Modal Product Name/Title */
+.modal-product-name {
+    color: var(--modal-primary-blue); /* Use a consistent blue for titles */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* Modal Product Info Grid */
+.modal-product-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px; /* Increased gap */
+    margin-top: 25px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 25px;
+}
+
+.modal-product-info-grid p {
+    margin-bottom: 0; /* Remove default paragraph margin */
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+.modal-product-info-grid p strong {
+    color: var(--modal-primary-blue); /* Emphasize labels */
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/* Modal Admin Actions (will be hidden for staff) */
+.modal-admin-actions {
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+}
+
+.modal-action-btn {
+    padding: 12px 25px; /* Larger padding for modal buttons */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.modal-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.modal-edit-btn {
+    background-color: #28a745; /* Green */
+}
+.modal-edit-btn:hover {
+    background-color: #218838;
+}
+
+.modal-delete-btn {
+    background-color: #dc3545; /* Red */
+}
+.modal-delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Animations */
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Dark Mode for Modal */
+body.dark-mode .modal-content {
+    background-color: var(--sidebar-bg); /* Darker background */
+    color: var(--text-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .modal-close-button {
+    color: #ccc;
+}
+body.dark-mode .modal-close-button:hover {
+    color: white;
+}
+
+body.dark-mode .modal-product-name,
+body.dark-mode .modal-product-info-grid p strong {
+    color: var(--modal-primary-blue); /* Use dark mode accent blue */
+}
+
+body.dark-mode .modal-product-info-grid {
+    border-top-color: var(--border-color);
+}
+
+body.dark-mode .modal-product-image {
+    border-color: var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+    }
+    .modal-product-name {
+        font-size: 1.5em;
+    }
+    .modal-product-info-grid {
+        grid-template-columns: 1fr; /* Stack info on very small screens */
+        gap: 10px;
+    }
+    .modal-admin-actions {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px;
+    }
+    .modal-action-btn {
+        width: 100%; /* Full width buttons when stacked */
+    }
+}
+
+/* Responsive adjustments for search bar (matching admin) */
+@media (max-width: 768px) {
+    .products-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .products-section h3 {
+        margin-bottom: 10px;
+    }
+    .search-bar-container {
+        width: 100%;
+        justify-content: center;
+        max-width: none;
+        flex-wrap: wrap;
+    }
+    .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .search-button, .clear-search-button {
+        width: calc(50% - 5px);
+        margin-bottom: 0;
+    }
+    .search-button:first-of-type {
+        margin-right: 5px;
+    }
+    .clear-search-button {
+        margin-left: 5px;
+    }
+}

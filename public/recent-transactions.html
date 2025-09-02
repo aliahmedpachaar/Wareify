@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wareify | Recent Transactions</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/recent-transactions.css">
+</head>
+<body>
+    <header>
+        <div class="main-header">
+            <img src="Wareify-logo.jpg" alt="Wareify Logo" />
+            <h1>Recent Transactions</h1>
+        </div>
+        <div class="header-actions">
+            <button id="themeToggle" class="theme-toggle">☀️</button>
+            <span>🔔</span>
+        </div>
+    </header>
+    <div class="sidebar">
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="add-item.html">➕ Add New Item</a>
+        <a href="blockchain.html">🔗 Blockchain</a>
+        <a href="user-management.html">👥 User Management</a>
+        <a href="add-shipments.html">🚚 Add Shipment</a>
+        <a href="pending-shipments.html">⏳ Pending Shipments</a>
+        <a href="track-shipments.html">📦 Track Shipments</a>
+        <a href="recent-transactions.html" class="active">🧾 Recent Transactions</a>
+        <a href="#" id="logoutButton" class="logout-button">🚪 Logout</a>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="recent-transactions-container">
+            <div class="products-header">
+                 <h2>All Transactions</h2>
+                <div class="search-bar-container">
+                    <input type="text" id="transactionSearchInput" placeholder="Search transactions..." class="search-input">
+                    <button id="searchButton" class="search-button">Search</button>
+                    <button id="clearSearchButton" class="clear-search-button" style="display:none;">Clear</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="transactionsTable" class="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Item Name</th>
+                            <th>Recipient</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Delete</th> </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                        </tbody>
+                </table>
+            </div>
+            <p class="no-data" id="noTransactionsMessage" style="display: none;">No transactions found.</p>
+        </div>
+    </div>
+    
+    <script src="js/logout.js"></script>
+
+    <script src="js/recent-transactions.js"></script>
+
+</body>
+</html>

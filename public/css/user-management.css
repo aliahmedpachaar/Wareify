@@ -1,0 +1,333 @@
+/* user-management.css */
+
+/* --- Root Variables for User Management Specifics --- */
+/* These should ideally be consistent with dashboard.css or extend it */
+:root {
+    /* Re-using variables from dashboard.css for consistency */
+    --card-bg: #ffffff;
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --border-color: #e0e0e0;
+    --text-color-dark: #333; /* Specific for user-management, might be redundant if using var(--text-color) */
+
+    /* Define these if not already inherited or to override */
+    --primary-blue: #007bff; /* Matches --accent-blue from dashboard.css */
+    --error-red: #dc3545; /* Matches delete button red from dashboard.css */
+    --success-green: #28a745; /* Matches add button green */
+}
+
+/* --- Dark Mode Variables for User Management Specifics --- */
+body.dark-mode {
+    --card-bg: #2d3748;
+    --shadow-light: rgba(0, 0, 0, 0.2);
+    --border-color: #4a5568;
+    --text-color-dark: #e2e8f0; /* Lighter text for dark mode */
+
+    --primary-blue: #63b3ed; /* Dark mode accent blue */
+    --error-red: #c82333; /* Darker red for dark mode */
+    --success-green: #218838; /* Darker green for dark mode */
+}
+
+
+.user-management-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    color: var(--text-color-dark); /* Use specific text color for this container */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-management-container h2 {
+    color: var(--primary-blue); /* Use defined primary blue */
+    margin-bottom: 20px;
+    font-size: 2em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.add-user-button {
+    background-color: var(--success-green); /* Use defined success green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-user-button:hover {
+    background-color: #218838; /* Darker green */
+    transform: translateY(-2px);
+}
+
+#userTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--card-bg); /* Ensure table background matches card */
+    border-radius: 8px; /* Match card border-radius */
+    overflow: hidden; /* For rounded corners on table */
+    transition: background-color 0.3s ease;
+}
+
+#userTable th, #userTable td {
+    border: 1px solid var(--border-color);
+    padding: 12px 15px;
+    text-align: left;
+    color: var(--text-color-dark); /* Ensure text color is set */
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+#userTable th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    color: var(--text-color-dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode #userTable th {
+    background-color: #3a414e; /* Darker grey for dark mode header */
+}
+
+#userTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+body.dark-mode #userTable tbody tr:nth-child(even) {
+    background-color: #2f3847;
+}
+
+#userTable tbody tr:hover {
+    background-color: #e6f7ff; /* Light blue on hover */
+}
+
+body.dark-mode #userTable tbody tr:hover {
+    background-color: #3b4d63;
+}
+
+/* Action buttons in table */
+.action-button {
+    padding: 8px 12px;
+    border: 1px solid rgba(0,0,0,0.2); /* Added a light border for visibility */
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-right: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+    color: white !important; /* Explicitly white for contrast */
+}
+
+.action-button:last-child {
+    margin-right: 0;
+}
+
+.edit-button {
+    background-color: var(--primary-blue) !important; /* Use defined primary blue */
+    color: white !important;
+}
+
+.edit-button:hover {
+    background-color: #0056b3 !important; /* Darker blue on hover */
+    transform: translateY(-1px);
+}
+
+.delete-button {
+    background-color: var(--error-red) !important; /* Use defined error red */
+    color: white !important;
+}
+
+.delete-button:hover {
+    background-color: #c82333 !important; /* Darker red on hover */
+    transform: translateY(-1px);
+}
+
+/* For dark mode, ensure border also changes */
+body.dark-mode .action-button {
+    border: 1px solid rgba(255,255,255,0.3); /* Lighter border in dark mode */
+}
+
+/* --- Modal Styles (re-used from dashboard, but included here for completeness) --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    color: var(--text-color-dark);
+    animation: fadeIn 0.3s ease-out;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-content h2 {
+    color: var(--primary-blue);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select {
+    width: 100%; /* Changed to 100% to fill container */
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width */
+    background-color: var(--card-bg); /* Match card background */
+    color: var(--text-color-dark); /* Ensure text color is set */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: white;
+}
+
+.button-group button[type="submit"] {
+    background-color: var(--success-green); /* Use defined success green */
+}
+
+.button-group button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.button-group .cancel-button {
+    background-color: #6c757d; /* Grey for Cancel */
+}
+
+.button-group .cancel-button:hover {
+    background-color: #5a6268;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments for user management page */
+@media (max-width: 768px) {
+    .user-management-container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+    .user-management-container h2 {
+        font-size: 1.8em;
+    }
+    #userTable th, #userTable td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    .action-button {
+        padding: 6px 10px;
+        font-size: 0.85em;
+        margin-right: 5px;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-content h2 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-management-container {
+        padding: 15px;
+    }
+    .add-user-button {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    #userTable {
+        font-size: 0.8em;
+    }
+    #userTable th, #userTable td {
+        padding: 8px;
+    }
+    .action-button {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .button-group {
+        flex-direction: column;
+    }
+    .button-group button {
+        width: 100%;
+    }
+}

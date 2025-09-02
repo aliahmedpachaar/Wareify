@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wareify | Add New Product</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/add-item.css">
+</head>
+<body>
+    <header>
+        <div class="main-header">
+            <img src="Wareify-logo.jpg" alt="Wareify Logo" />
+            <h1>Add New Product</h1>
+        </div>
+        <div class="header-actions">
+            <button id="themeToggle" class="theme-toggle">☀️</button>
+            <span>🔔</span>
+        </div>
+    </header>
+    <div class="sidebar">
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="blockchain.html">🔗 Blockchain</a>
+        <a href="#" id="logoutButton" class="logout-button">🚪 Logout</a>
+    </div>
+    <div class="main-content" id="mainContent">
+        <div class="add-item-container">
+            <h2>Add New Product to Inventory</h2>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" id="name" name="name" placeholder="" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" id="category" name="category" placeholder="e.g., Optics" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (RM)</label>
+                    <input type="number" id="price" name="price" step="0.01" placeholder="e.g., 299.99" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock Quantity</label>
+                    <input type="number" id="stock" name="stock" placeholder="e.g., 150" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Brief description of the product"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer</label>
+                    <input type="text" id="manufacturer" name="manufacturer" placeholder="e.g., TechCorp Inc.">
+                </div>
+                <div class="form-group">
+                    <label for="manufacturedAt">Manufactured Date</label>
+                    <input type="date" id="manufacturedAt" name="manufacturedAt">
+                </div>
+                <div class="form-group">
+                    <label for="sellingLocation">Selling Location</label>
+                    <input type="text" id="sellingLocation" name="sellingLocation" placeholder="e.g., Warehouse abc">
+                </div>
+                <div class="form-group">
+                    <label for="batchNo">Batch Number</label>
+                    <input type="text" id="batchNo" name="batchNo" placeholder="e.g., BATCH-202507-001">
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Product Image</label>
+                    <input type="file" id="productImage" name="productImage" accept="image/*">
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-button" onclick="window.location.href='dashboard.html'">Cancel</button>
+                    <button type="submit">Add Product</button>
+                </div>
+            </form>
+
+            <div id="messageBox" class="message-box"></div>
+
+            <div id="qrCodeDisplay" class="qr-code-display">
+                <p>Scan this QR code to view product details:</p>
+                <div id="qrCodeContainer"></div>
+                <div class="qr-code-actions">
+                    <button id="downloadQrButton">Download QR Code</button>
+                    <button id="addAnotherProductButton">Add Another Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <script src="js/logout.js"></script>
+    <script src="js/add-item.js"></script>
+</body>
+</html>

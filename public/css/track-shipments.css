@@ -1,0 +1,189 @@
+/* track-shipments.css */
+
+/* --- Root Variables for Track Shipments Specifics --- */
+:root {
+    --card-bg: #ffffff;
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --border-color: #e0e0e0;
+    --text-color-dark: #333;
+    --primary-blue: #007bff;
+    --table-header-bg: #f2f2f2;
+
+    /* Status Badge Colors */
+    --status-pending-bg: #fff3cd;
+    --status-pending-text: #856404;
+    --status-in-transit-bg: #cce5ff;
+    --status-in-transit-text: #004085;
+    --status-delivered-bg: #d4edda;
+    --status-delivered-text: #155724;
+}
+
+
+
+/* --- Dark Mode Variables for Track Shipments Specifics --- */
+body.dark-mode {
+    --card-bg: #2d3748;
+    --shadow-light: rgba(0, 0, 0, 0.2);
+    --border-color: #4a5568;
+    --text-color-dark: #e2e8f0;
+    --primary-blue: #63b3ed;
+    --table-header-bg: #3a414e;
+
+    /* Dark Mode Status Badge Colors */
+    --status-pending-bg: #594c03;
+    --status-pending-text: #fff3cd;
+    --status-in-transit-bg: #002d51;
+    --status-in-transit-text: #cce5ff;
+    --status-delivered-bg: #0d3215;
+    --status-delivered-text: #d4edda;
+}
+
+/* --- Container for the Track Shipments Table --- */
+.track-shipments-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    width: 100%;
+    max-width: 1200px; /* Wider for more columns */
+    margin: 20px auto;
+    color: var(--text-color-dark);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.track-shipments-container h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-size: 2em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- Table Wrapper for Horizontal Scrolling on Small Screens --- */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* --- Table Styles --- */
+.shipments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.shipments-table th, 
+.shipments-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px 15px;
+    text-align: left;
+    color: var(--text-color-dark);
+    transition: border-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap; /* Prevent wrapping in cells */
+}
+
+.shipments-table thead th {
+    background-color: var(--table-header-bg);
+    font-weight: 600;
+    color: var(--text-color-dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .shipments-table thead th {
+    background-color: #3a414e;
+}
+
+.shipments-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+body.dark-mode .shipments-table tbody tr:nth-child(even) {
+    background-color: #2f3847;
+}
+
+.shipments-table tbody tr:hover {
+    background-color: #e6f7ff;
+}
+
+body.dark-mode .shipments-table tbody tr:hover {
+    background-color: #3b4d63;
+}
+
+/* --- Status Badge Classes --- */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
+}
+
+.status-in-transit {
+    background-color: var(--status-in-transit-bg);
+    color: var(--status-in-transit-text);
+}
+
+.status-delivered {
+    background-color: var(--status-delivered-bg);
+    color: var(--status-delivered-text);
+}
+
+/* --- Action Links --- */
+.view-details-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.view-details-link:hover {
+    text-decoration: underline;
+}
+
+/* --- No Data Message --- */
+.no-data {
+    text-align: center;
+    margin-top: 2rem;
+    color: #6b7280;
+    font-style: italic;
+    transition: color 0.3s ease;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .track-shipments-container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+    .track-shipments-container h2 {
+        font-size: 1.8em;
+    }
+    .shipments-table th, 
+    .shipments-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .track-shipments-container {
+        padding: 15px;
+    }
+    .shipments-table {
+        font-size: 0.8em;
+    }
+    .shipments-table th, 
+    .shipments-table td {
+        padding: 8px;
+    }
+}

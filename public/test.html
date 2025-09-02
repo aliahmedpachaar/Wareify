@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>QR Code Generation Test</h1>
+    <div id="testQR"></div>
+
+    <script>
+        if (typeof QRCode !== 'undefined') {
+            new QRCode(document.getElementById("testQR"), {
+                text: "https://www.google.com",
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        } else {
+            document.body.innerHTML += "<p style='color:red;'>❌ QRCode library failed to load.</p>";
+        }
+    </script>
+</body>
+</html>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Wareify | Track Shipments</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/track-shipments.css">
+  <style>
+    /* Simple search bar */
+    .search-container {
+      margin-bottom: 20px; display:flex; gap:10px; align-items:center;
+    }
+    .search-container input {
+      flex:1; padding:10px; border:1px solid #ccc; border-radius:6px;
+    }
+    .search-container button {
+      padding:10px 14px; border:none; border-radius:6px; background:#007bff; color:#fff; cursor:pointer;
+    }
+
+    /* Modal */
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:1000; }
+    .modal-content { background:#fff; width:90%; max-width:640px; border-radius:12px; padding:24px; position:relative; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+    .modal-close-button { position:absolute; top:10px; right:14px; font-size:1.8rem; background:none; border:none; cursor:pointer; }
+    .timeline { list-style:none; padding-left:18px; margin-top:10px; border-left:2px solid #eee; }
+    .timeline li { margin:10px 0; position:relative; }
+    .timeline li::before { content:""; position:absolute; left:-8px; top:6px; width:10px; height:10px; border-radius:50%; background:#007bff; }
+    .action-btn { padding:6px 10px; border:none; border-radius:6px; cursor:pointer; }
+    .action-btn.view { background:#0d6efd; color:#fff; }
+    .action-btn.delete { background:#dc3545; color:#fff; }
+    .action-btn.secondary { background:#6c757d; color:#fff; }
+    #assignRfidBtn { background:#17a2b8; }
+    #startTransitBtn { background:#ffc107; color:#000; }
+    #markDeliveredBtn { background:#28a745; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="main-header">
+      <img src="Wareify-logo.jpg" alt="Wareify Logo" />
+      <h1>Track Shipments</h1>
+    </div>
+    <div class="header-actions">
+      <button id="themeToggle" class="theme-toggle">☀️</button>
+      <span>🔔</span>
+    </div>
+  </header>
+
+  <div class="sidebar">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="add-item.html">➕ Add New Item</a>
+    <a href="blockchain.html">🔗 Blockchain</a>
+    <a href="user-management.html">👥 User Management</a>
+    <a href="add-shipment.html">🚚 Add Shipment</a>
+    <a href="pending-shipments.html">⏳ Pending Shipments</a>
+    <a href="track-shipments.html" class="active">📦 Track Shipments</a>
+    <a href="#" id="logoutButton" class="logout-button">🚪 Logout</a>
+  </div>
+
+  <div class="main-content" id="mainContent">
+    <div class="track-shipments-container">
+      <h2>All Shipments</h2>
+
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by Shipment ID / Item / Recipient...">
+        <button id="searchButton">Search</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="shipmentsTable" class="shipments-table">
+          <thead>
+            <tr>
+              <th>Shipment ID</th>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Recipient</th>
+              <th>RFID Tag</th> 
+              <th>Status</th>
+              <th style="width:200px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="shipmentsTableBody"></tbody>
+        </table>
+      </div>
+      <p class="no-data" id="noShipmentsMessage">No shipments have been registered yet.</p>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div id="detailsModal" class="modal-overlay">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="modal-close-button" onclick="closeModal()" title="Close">&times;</button>
+      <h3 id="modalShipmentId"></h3>
+      <p><strong>Item:</strong> <span id="modalItemName"></span></p>
+      <p><strong>Recipient:</strong> <span id="modalRecipient"></span></p>
+      <h4>Shipment History</h4>
+      <ul id="modalTimeline" class="timeline"></ul>
+      <div id="modalActions" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+    </div>
+  </div>
+
+  <script src="js/logout.js"></script>
+  <script src="js/track-shipments.js"></script>
+<script>
+  document.getElementById("searchButton").addEventListener("click", () => {
+    searchShipments();
+  });
+
+  document.getElementById("searchInput").addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+      searchShipments();
+    }
+  });
+
+  function searchShipments() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let rows = document.querySelectorAll("#shipmentsTable tbody tr");
+
+    rows.forEach(row => {
+      let text = row.innerText.toLowerCase();
+      row.style.display = text.includes(input) ? "" : "none";
+    });
+  }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wareify | User Management</title>
+    <!-- IMPORTANT: Link dashboard.css first for base styles -->
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- Then link user-management.css for specific overrides -->
+    <link rel="stylesheet" href="css/user-management.css">
+</head>
+<body>
+    <header>
+        <div class="main-header">
+            <img src="Wareify-logo.jpg" alt="Wareify Logo" />
+            <h1>User Management</h1>
+        </div>
+        <div class="header-actions">
+            <button id="themeToggle" class="theme-toggle">☀️</button>
+            <span>🔔</span>
+        </div>
+    </header>
+    <div class="sidebar">
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="add-item.html">➕ Add New Item</a>
+        <a href="blockchain.html">🔗 Blockchain</a>
+        <a href="user-management.html" class="active" id="userManagementLink">👥 User Management</a>
+        <a href="#" id="logoutButton" class="logout-button">🚪 Logout</a>
+    </div>
+    <div class="main-content" id="mainContent">
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="user-management-container">
+            <h2>All Users</h2>
+            <button id="addUserButton" class="add-user-button">Add New User</button>
+
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User data will be loaded here -->
+                </tbody>
+            </table>
+            <div id="noUsersMessage" style="display: none; text-align: center; padding: 20px; color: #555;">No users found.</div>
+        </div>
+    </div>
+
+    <!-- Add/Edit User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modalTitle">Add New User</h2>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Leave blank to keep current password (for edit)">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" required>
+                        <option value="staff">Staff</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-button">Cancel</button>
+                    <button type="submit">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/logout.js"></script>
+    <script src="js/user-management.js"></script> <!-- New JS file for logic -->
+</body>
+</html>

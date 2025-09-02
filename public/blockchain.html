@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Wareify | Blockchain Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/blockchain.css">
+</head>
+<body>
+
+    <h1>📦 Wareify Blockchain Explorer</h1>
+
+    <div id="chain"></div>
+
+    <footer>© 2025 Wareify. All rights reserved.</footer>
+
+    <script>
+        async function loadBlockchain() {
+            try {
+                // Ensure your Node.js backend is running at http://localhost:3000
+                const response = await fetch("http://localhost:3000/blockchain"); 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const chain = await response.json();
+                const container = document.getElementById("chain");
+
+                container.innerHTML = ''; // Clear any loading messages or previous content
+
+                chain.forEach((block, index) => {
+                    const blockContainer = document.createElement("div");
+                    blockContainer.className = "block-container";
+
+                    const blockDiv = document.createElement("div");
+                    blockDiv.className = "block";
+                    blockDiv.setAttribute('data-index', block.index);
+                    blockDiv.style.animationDelay = `${index * 0.15}s`;
+
+                    // --- [FIXED] The 'innerHTML' assignment is now correctly uncommented ---
+                    blockDiv.innerHTML = `
+                        <span class="info-badge">${block.index === 0 ? 'Genesis Block' : 'Mined Block'}</span>
+                        <h2>Block #${block.index}</h2>
+                        <div class="hash-info">
+                            <strong>Timestamp:</strong> ${new Date(block.timestamp).toLocaleString()}<br/>
+                            <strong>Nonce:</strong> ${block.nonce}<br/>
+                            <strong>Hash:</strong> <span>${block.hash}</span><br/>
+                            <strong>Previous Hash:</strong> <span>${block.previousHash}</span>
+                        </div>
+                    `;
+
+                    // Add mining time if it's not the Genesis block
+                    if (block.index > 0) {
+                        const miningInfoDiv = document.createElement("div");
+                        miningInfoDiv.className = "mining-info";
+                        miningInfoDiv.innerHTML = `<strong>Mining Time:</strong> ${block.miningTimeMs} ms`;
+                        blockDiv.appendChild(miningInfoDiv);
+                    }
+
+                    // Add specific message or transaction data
+                    if (block.index === 0) {
+                        const genesisMessage = document.createElement("div");
+                        genesisMessage.className = "genesis-info";
+                        genesisMessage.innerHTML = "This is the <strong>Genesis Block</strong>, the foundation of the chain.";
+                        blockDiv.appendChild(genesisMessage);
+                    } else if (Array.isArray(block.data) && block.data.length > 0) {
+                        const productListHeader = document.createElement("div");
+                        productListHeader.className = "product-list-header";
+                        productListHeader.innerText = `Transactions (${block.data.length})`;
+                        blockDiv.appendChild(productListHeader);
+
+                        block.data.forEach((tx) => {
+                            const prod = document.createElement("div");
+                            prod.className = "product";
+                            let productHtml = `<div class="product-name">Product ID: ${tx.productId}</div>`;
+                            for (const key in tx) {
+                                if (tx.hasOwnProperty(key) && key !== 'productId') {
+                                    productHtml += `<div><strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${tx[key]}</div>`;
+                                }
+                            }
+                            prod.innerHTML = productHtml;
+                            blockDiv.appendChild(prod);
+                        });
+                    } else {
+                        const empty = document.createElement("div");
+                        empty.className = "genesis-info";
+                        empty.innerHTML = "This block contains no transaction data.";
+                        blockDiv.appendChild(empty);
+                    }
+
+                    blockContainer.appendChild(blockDiv);
+
+                    // Add connecting arrow
+                    if (index < chain.length - 1) {
+                        const arrowDiv = document.createElement("div");
+                        arrowDiv.className = "block-arrow";
+                        arrowDiv.style.animationDelay = `${index * 0.15 + 0.3}s`;
+                        blockContainer.appendChild(arrowDiv);
+                    }
+
+                    container.appendChild(blockContainer);
+                });
+
+            } catch (err) {
+                document.getElementById("chain").innerHTML = `<p style="color: red; text-align: center; font-size: 1.2em;"><strong>Error:</strong> Could not load blockchain data. <br/> Please ensure your Node.js server is running correctly at http://localhost:3000.</p>`;
+                console.error("Error loading blockchain:", err);
+            }
+        }
+
+        loadBlockchain();
+    </script>
+
+</body>
+</html>
