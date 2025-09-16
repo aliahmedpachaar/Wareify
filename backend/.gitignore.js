@@ -17,3 +17,5 @@ Thumbs.db
 # Frontend build (if any)
 dist/
 build/
+# Ignore .env files
+*.env
