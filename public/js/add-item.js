@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
     const downloadQrButton = document.getElementById('downloadQrButton');
     const addAnotherProductButton = document.getElementById('addAnotherProductButton');
-
+    const imageInput = document.getElementById("productImage");
     // Function to display messages
     function showMessage(message, isError = false) {
         messageBox.textContent = message;
@@ -67,51 +67,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ✅ AI Autofill: when image is uploaded
-   // add-item.js (Corrected code)
-const imageInput = document.getElementById("productImage");
-imageInput.addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
+   imageInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
 
-  const formData = new FormData();
-  formData.append("image", file);
+        showMessage("️🧠 Analyzing image with AI...", false);
+        const formData = new FormData();
+        formData.append("image", file);
 
-  try {
-    const response = await fetch("http://localhost:3000/api/analyze-image", {
-      method: "POST",
-      body: formData,
-    });
+        try {
+            const response = await fetch("http://localhost:3000/api/analyze-image", {
+                method: "POST",
+                body: formData,
+            });
 
-    const data = await response.json();
-    console.log("AI Response:", data);
+            const data = await response.json();
+            console.log("AI Response Received:", data);
+            hideMessage();
 
-    if (data.caption && data.productName) {
+            if (data.caption && data.productName) {
+                // Populate main fields sent from the server
+                document.getElementById("description").value = data.caption;
+                document.getElementById("name").value = data.productName;
+
       // ✅ FIX: Use the data directly from the backend
-      document.getElementById("description").value = data.caption;
-      document.getElementById("name").value = data.productName;
+     if (data.brand) {
+                    document.getElementById("manufacturer").value = data.brand;
+                } else {
+                    document.getElementById("manufacturer").value = ''; // Clear it if no brand found
+                }
 
       // --- Your category and other logic can remain the same ---
-      const lc = data.caption.toLowerCase(); // Use full caption for category context
-      if (lc.includes("bottle") || lc.includes("drink")) {
-        document.getElementById("category").value = "Beverage";
-      } else if (lc.includes("box")) {
-        document.getElementById("category").value = "Packaged Goods";
-      } else if (
-        lc.includes("shirt") || lc.includes("t-shirt") || lc.includes("dress") || lc.includes("pants")
-      ) {
-        document.getElementById("category").value = "Clothing";
-      } else if (lc.includes("glasses") || lc.includes("spectacles")) {
-        document.getElementById("category").value = "Optics";
-      } else {
-        document.getElementById("category").value = "General";
-      }
+       const lc = data.caption.toLowerCase();
+                if (lc.includes("bottle") || lc.includes("drink")) {
+                    document.getElementById("category").value = "Beverage";
+                } else if (lc.includes("box")) {
+                    document.getElementById("category").value = "Packaged Goods";
+                } else if (lc.includes("shirt") || lc.includes("t-shirt") || lc.includes("shoe")) {
+                    document.getElementById("category").value = "Apparel";
+                } else if (lc.includes("glasses") || lc.includes("spectacles")) {
+                    document.getElementById("category").value = "Optics";
+                } else {
+                    document.getElementById("category").value = "General";
+                }
 
-      // --- Manufacturer guess ---
-      if (lc.includes("coca cola")) {
-        document.getElementById("manufacturer").value = "Coca Cola";
-      } else if (lc.includes("pepsi")) {
-        document.getElementById("manufacturer").value = "PepsiCo";
-      }
 
       // --- Default manufactured date = today ---
       document.getElementById("manufacturedAt").value = new Date().toISOString().split("T")[0];

@@ -10,7 +10,8 @@ const path = require('path');
 const fs = require('fs'); 
 const { spawn } = require("child_process");
 const { SerialPort, ReadlineParser } = require("serialport");
-
+const fetch = require('node-fetch'); 
+const QRCode = require('qrcode');
 
 // --- Import your Mongoose Models ---
 const User = require('./models/User');
@@ -20,64 +21,78 @@ const Shipment = require('./models/Shipment'); // <-- ADD THIS LINE
 // --- Import your blockchain instance ---
 const blockchain = require('./blockchain');
 
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_jwt_key_here';
-
-
+// --- Helper Functions for AI & Text Processing ---
 function getCaptionFromPython(imagePath) {
-  return new Promise((resolve, reject) => {
-    const pythonProcess = spawn("python3", [
-      path.join(__dirname, "caption.py"),
-      imagePath,
-    ]);
-
-    let result = "";
-    pythonProcess.stdout.on("data", (data) => {
-      result += data.toString();
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn("python3", [path.join(__dirname, "caption.py"), imagePath]);
+        let result = "";
+        pythonProcess.stdout.on("data", (data) => { result += data.toString(); });
+        pythonProcess.stderr.on("data", (data) => { console.error(`Python error: ${data}`); });
+        pythonProcess.on("close", (code) => {
+            if (code === 0) {
+                try {
+                    const jsonData = JSON.parse(result);
+                    resolve(jsonData.caption); 
+                } catch (e) {
+                    console.error("Python script output was not valid JSON:", result);
+                    reject("Failed to parse JSON from Python script.");
+                }
+            } else {
+                reject("Python script failed");
+            }
+        });
     });
-
-    pythonProcess.stderr.on("data", (data) => {
-      console.error(`Python error: ${data}`);
-    });
-
-    pythonProcess.on("close", (code) => {
-      if (code === 0) {
-        resolve(result.trim());
-      } else {
-        reject("Python script failed");
-      }
-    });
-  });
 }
 
-// This new function will run locally and reliably
-function extractProductName(caption) {
-  // Return a default if the caption is invalid
-  if (!caption || typeof caption !== 'string') {
-    return "Unknown Product";
-  }
-
-  // Use text-processing rules to find the most likely product name
-  let productName = caption
-    // Remove common prepositions and everything that comes after them
-    .replace(/\b(on|in|with|near|of|wearing|sitting|held by)\b.*$/i, "")
-    // Remove common AI-generated starting phrases
-    .replace(/^(a photo of|a picture of|a close up of|an image of)\s/i, "")
-    // Remove leading articles like "a", "an", or "the"
-    .replace(/^(a|an|the)\s/i, "")
-    // Remove any leftover punctuation
-    .replace(/[.,]/g, "")
-    .trim();
+// ✅ NEW SMART AI FUNCTION to get the core product name
+function extractProductType(caption) {
+    const productKeywords = ["shoes", "glasses", "bag", "watch", "shirt", "pants", "jacket", "hat", "dress", "bottle", "can", "box"];
+    const lowerCaseCaption = caption.toLowerCase();
     
-  // Capitalize the first letter for a clean look
-  productName = productName.charAt(0).toUpperCase() + productName.slice(1);
-
-  // If cleaning results in an empty string, return a default name
-  return productName || "Unnamed Product";
+    for (const word of productKeywords) {
+        if (lowerCaseCaption.includes(word)) {
+            // Capitalize the first letter for display
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+    }
+    return "Unknown Product"; // Fallback if no keyword is found
 }
 
+async function extractBrandFromCaption(caption) {
+    console.log("Asking AI to extract brand from:", caption);
+    try {
+        const response = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.HF_TOKEN}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                inputs: `From the text "${caption}", what is the brand name? Respond with only the brand name and nothing else. If there is no brand, respond with 'N/A'.`,
+                parameters: { max_new_tokens: 10, return_full_text: false }
+            }),
+        });
+        if (!response.ok) throw new Error(`Hugging Face API error: ${response.statusText}`);
+
+        const result = await response.json();
+        if (result && result[0] && result[0].generated_text) {
+            let brand = result[0].generated_text.trim().replace(/["'.]/g, '');
+            if (brand.toLowerCase() !== 'n/a' && brand.length > 1) {
+                console.log("AI extracted brand:", brand);
+                return brand;
+            }
+        }
+    } catch (error) {
+        console.error("Failed to extract brand:", error);
+    }
+    return null;
+}
+  
 // --- Middleware ---
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // For parsing application/json bodies
@@ -116,32 +131,28 @@ const upload = multer({
     }
 });
 
-// --- AI Image Analysis Route (Hugging Face) ---
+// --- AI Image Analysis Route ---
 app.post("/api/analyze-image", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No image uploaded" });
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: "No image uploaded" });
+        }
+        const caption = await getCaptionFromPython(req.file.path);
+        
+        // Use the new rule-based function for product name
+        const productName = extractProductType(caption); 
+        
+        // Still use the AI for brand detection
+        const brand = await extractBrandFromCaption(caption);
+        
+        console.log("Analysis Complete. Sending to frontend:", { caption, productName, brand });
+        res.json({ caption, productName, brand });
+
+    } catch (error) {
+        console.error("Error analyzing image:", error);
+        res.status(500).json({ error: "Failed to analyze image" });
     }
-    const imagePath = req.file.path;
-
-    // Step 1: Get the full description from your working Python script
-    const caption = await getCaptionFromPython(imagePath);
-    
-    // Step 2: Get the product name using our new local function
-    const productName = extractProductName(caption);
-
-    console.log("AI Output (Description):", caption);
-    console.log("Local Extraction (Product Name):", productName);
-    
-    // Step 3: Send both back to the frontend
-    res.json({ caption: caption, productName: productName });
-
-  } catch (error) {
-    console.error("Error analyzing image:", error);
-    res.status(500).json({ error: "Failed to analyze image" });
-  }
 });
-
 // --- JWT Authentication Middleware ---
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -364,6 +375,8 @@ app.post('/products', authenticateToken, authorizeRole(['admin']), (req, res, ne
         });
 
         await newProduct.save();
+       
+
 
         // **FIXED**: Changed addProduct to addTransaction
         blockchain.addTransaction({
@@ -374,8 +387,10 @@ app.post('/products', authenticateToken, authorizeRole(['admin']), (req, res, ne
             savedAt: new Date().toISOString(),
             action: 'added'
         });
-        blockchain.minePendingTransactions();
-        console.log('New block mined with the new product!');
+       const minedBlock = blockchain.minePendingTransactions();
+if (minedBlock) {
+  console.log("New block mined and added to blockchain!");
+}
         
         res.status(201).json({ message: 'Product added successfully', product: newProduct });
     } catch (err) {
@@ -491,7 +506,6 @@ app.patch('/shipments/:id/status', authenticateToken, authorizeRole(['admin']), 
         res.status(500).json({ message: 'Server error while updating shipment status.', error: err.message });
     }
 });
-// --- Add these two routes to your server.js ---
 
 // DELETE /shipments/:id - Delete a shipment
 app.delete('/shipments/:id', authenticateToken, authorizeRole(['admin']), async (req, res) => {

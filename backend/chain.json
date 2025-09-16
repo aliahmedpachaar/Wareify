@@ -2536,5 +2536,515 @@
         "nonce": 10656,
         "miningTimeMs": 63,
         "hash": "00000771c0109159e36b79d54bdfdf135b8a2803428059b1a2718e3e6783aaca"
+    },
+    {
+        "index": 17,
+        "timestamp": "2025-09-06T11:32:12.698Z",
+        "data": [
+            {
+                "productId": "68bc1bbc6a0e18b982be383b",
+                "name": "Pair",
+                "category": "Optics",
+                "price": 444,
+                "stock": 55,
+                "description": "a pair of glasses",
+                "manufacturer": "rrrr",
+                "manufacturedAt": "2025-09-06",
+                "sellingLocation": "ff",
+                "batchNo": "444",
+                "imageUrl": "/uploads/1757158332652-images.jpeg",
+                "savedAt": "2025-09-06T11:32:12.698Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00000771c0109159e36b79d54bdfdf135b8a2803428059b1a2718e3e6783aaca",
+        "nonce": 787,
+        "miningTimeMs": 7,
+        "hash": "0000b38156acf6e790292bc6b337a8e8e9157df0a42f6999542ef859bda36586"
+    },
+    {
+        "index": 18,
+        "timestamp": "2025-09-06T11:33:29.654Z",
+        "data": [
+            {
+                "productId": "68bc1bbc6a0e18b982be383b",
+                "action": "deleted",
+                "deletedAt": "2025-09-06T11:32:35.569Z"
+            },
+            {
+                "productId": "68b6ec7c7098589b8b57b4c6",
+                "action": "deleted",
+                "deletedAt": "2025-09-06T11:32:45.596Z"
+            },
+            {
+                "productId": "68bc1c096a0e18b982be3850",
+                "name": "brown glasses",
+                "category": "Optics",
+                "price": 89,
+                "stock": 90,
+                "description": "the glasses are made from titanium and have a matt finish",
+                "manufacturer": "louis vuitton",
+                "manufacturedAt": "2025-09-06",
+                "sellingLocation": "kl",
+                "batchNo": "0998",
+                "imageUrl": "/uploads/1757158409628-Image.jpeg",
+                "savedAt": "2025-09-06T11:33:29.653Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000b38156acf6e790292bc6b337a8e8e9157df0a42f6999542ef859bda36586",
+        "nonce": 13192,
+        "miningTimeMs": 84,
+        "hash": "0000c4e5504b120cb33dcfd22ca3d8c49176f42868c549bc519879e1176388cd"
+    },
+    {
+        "index": 19,
+        "timestamp": "2025-09-07T08:58:58.461Z",
+        "data": [
+            {
+                "productId": "68bd4952e01e6a859e498c09",
+                "name": "green glasses",
+                "category": "Optics",
+                "price": 90,
+                "stock": 80,
+                "description": "{\"caption\": \"a pair of glasses on a green surface\"}",
+                "manufacturer": "gucci",
+                "manufacturedAt": "2025-09-07",
+                "sellingLocation": "kl",
+                "batchNo": "90",
+                "imageUrl": "/uploads/1757235538429-download (2).jpeg",
+                "savedAt": "2025-09-07T08:58:58.460Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000c4e5504b120cb33dcfd22ca3d8c49176f42868c549bc519879e1176388cd",
+        "nonce": 34284,
+        "miningTimeMs": 95,
+        "hash": "00002a7d6d6b6c2741d2ac2ab0c9ec3eb5a798195b157c586d0954b68a7fd832"
+    },
+    {
+        "index": 20,
+        "timestamp": "2025-09-07T09:13:29.571Z",
+        "data": [
+            {
+                "productId": "68bd4cb9e01e6a859e498c0e",
+                "name": "glasses ",
+                "category": "Optics",
+                "price": 90,
+                "stock": 78,
+                "description": "\"a pair of glasses\"}",
+                "manufacturer": "ray ban",
+                "manufacturedAt": "2025-09-07",
+                "sellingLocation": "pavilion",
+                "batchNo": "0988",
+                "imageUrl": "/uploads/1757236409530-images.jpeg",
+                "savedAt": "2025-09-07T09:13:29.571Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00002a7d6d6b6c2741d2ac2ab0c9ec3eb5a798195b157c586d0954b68a7fd832",
+        "nonce": 91771,
+        "miningTimeMs": 226,
+        "hash": "00001a372537cd11f1bdee17e42ef643e1bdc2825aaf54bbb08aba71471ce802"
+    },
+    {
+        "index": 21,
+        "timestamp": "2025-09-07T09:16:49.355Z",
+        "data": [
+            {
+                "productId": "68bd4cb9e01e6a859e498c0e",
+                "action": "deleted",
+                "deletedAt": "2025-09-07T09:15:56.823Z"
+            },
+            {
+                "productId": "68bd4d81e01e6a859e498c3a",
+                "name": "2glassses",
+                "category": "Optics",
+                "price": 45,
+                "stock": 77,
+                "description": "{\"caption\": \"a pair of glasses\"}",
+                "manufacturer": "ggg",
+                "manufacturedAt": "2025-09-07",
+                "sellingLocation": "kl",
+                "batchNo": "666",
+                "imageUrl": "/uploads/1757236609339-download.jpeg",
+                "savedAt": "2025-09-07T09:16:49.355Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00001a372537cd11f1bdee17e42ef643e1bdc2825aaf54bbb08aba71471ce802",
+        "nonce": 162900,
+        "miningTimeMs": 371,
+        "hash": "0000a1bba955ea5c4bd781ad108f9bd734fb122919a60f9149702e6b7aa7ed4e"
+    },
+    {
+        "index": 22,
+        "timestamp": "2025-09-07T11:52:26.001Z",
+        "data": [
+            {
+                "productId": "68bc1c096a0e18b982be3850",
+                "action": "deleted",
+                "deletedAt": "2025-09-07T11:48:58.335Z"
+            },
+            {
+                "productId": "68bd4952e01e6a859e498c09",
+                "action": "deleted",
+                "deletedAt": "2025-09-07T11:49:03.027Z"
+            },
+            {
+                "productId": "68bd4d81e01e6a859e498c3a",
+                "action": "deleted",
+                "deletedAt": "2025-09-07T11:49:07.934Z"
+            },
+            {
+                "productId": "68bd70243620af72ee64f5ce",
+                "action": "deleted",
+                "deletedAt": "2025-09-07T11:49:11.069Z"
+            },
+            {
+                "productId": "68bd71f929ee6fcfe9fb9461",
+                "name": "lv shoes",
+                "category": "General",
+                "price": 99,
+                "stock": 90,
+                "description": "{\"caption\": \"a pair of white sneakers with black and gold accents\"}",
+                "manufacturer": "lvvvvvvv",
+                "manufacturedAt": "2025-09-07",
+                "sellingLocation": "kkkkklllllllll",
+                "batchNo": "9999",
+                "imageUrl": "/uploads/1757245945977-louis-vuitton-charlie-sneaker-sustainability-recycled-natural-materials-unisex-twfb-2.jpg",
+                "savedAt": "2025-09-07T11:52:26.001Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000a1bba955ea5c4bd781ad108f9bd734fb122919a60f9149702e6b7aa7ed4e",
+        "nonce": 4175,
+        "miningTimeMs": 35,
+        "hash": "00003a70064cc764183626f3bf7bee2804e20745f428450582d5708f78100af2"
+    },
+    {
+        "index": 23,
+        "timestamp": "2025-09-09T08:43:52.823Z",
+        "data": [
+            {
+                "productId": "68bfe8c8c23f294cf73f36da",
+                "name": "glasssesss",
+                "category": "Optics",
+                "price": 98,
+                "stock": 89,
+                "description": "{\"caption\": \"a pair of glasses on a green surface\"}",
+                "manufacturer": "kkk",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "jj",
+                "batchNo": "890",
+                "imageUrl": "/uploads/1757407432781-download (2).jpeg",
+                "savedAt": "2025-09-09T08:43:52.823Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00003a70064cc764183626f3bf7bee2804e20745f428450582d5708f78100af2",
+        "nonce": 77413,
+        "miningTimeMs": 179,
+        "hash": "0000102ef8cf979278e16ee76b7d428da3b35a30fe532d7efb5ab27faac11fd3"
+    },
+    {
+        "index": 24,
+        "timestamp": "2025-09-09T08:49:22.207Z",
+        "data": [
+            {
+                "productId": "68bfea12c23f294cf73f36e2",
+                "name": "brown glasses",
+                "category": "Optics",
+                "price": 90,
+                "stock": 90,
+                "description": "{\"caption\": \"the glasses are made from titanium and have a matt finish\"}",
+                "manufacturer": "gucci",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "900",
+                "imageUrl": "/uploads/1757407762182-Image.jpeg",
+                "savedAt": "2025-09-09T08:49:22.207Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000102ef8cf979278e16ee76b7d428da3b35a30fe532d7efb5ab27faac11fd3",
+        "nonce": 51268,
+        "miningTimeMs": 145,
+        "hash": "0000df82260773106acf6e8a79921e536a27a2843aec963de0d0ce54a967581d"
+    },
+    {
+        "index": 25,
+        "timestamp": "2025-09-09T08:50:37.991Z",
+        "data": [
+            {
+                "productId": "68bfea5dc23f294cf73f36e7",
+                "name": "green glasses",
+                "category": "Optics",
+                "price": 8,
+                "stock": 999,
+                "description": "{\"caption\": \"a pair of glasses on a green surface\"}",
+                "manufacturer": "jjjj",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "99009",
+                "imageUrl": "/uploads/1757407837975-download (2).jpeg",
+                "savedAt": "2025-09-09T08:50:37.990Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000df82260773106acf6e8a79921e536a27a2843aec963de0d0ce54a967581d",
+        "nonce": 13912,
+        "miningTimeMs": 52,
+        "hash": "00008b48eda784b86397ecc81fb972462bb3d0af52e62c58825295c9ad8ec43b"
+    },
+    {
+        "index": 26,
+        "timestamp": "2025-09-09T09:06:01.696Z",
+        "data": [
+            {
+                "productId": "68bfedf95012d0c33cac9524",
+                "name": "gllasess white ray bana",
+                "category": "Optics",
+                "price": 44,
+                "stock": 9,
+                "description": "{\"caption\": \"a pair of glasses\"}",
+                "manufacturer": "lv",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "jjjjjjjj",
+                "batchNo": "894585",
+                "imageUrl": "/uploads/1757408761659-download.jpeg",
+                "savedAt": "2025-09-09T09:06:01.696Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00008b48eda784b86397ecc81fb972462bb3d0af52e62c58825295c9ad8ec43b",
+        "nonce": 67824,
+        "miningTimeMs": 161,
+        "hash": "0000439423b27da0c946bcbf2def40e4a3ccb9c05bab588a14b6fa9562d3da23"
+    },
+    {
+        "index": 27,
+        "timestamp": "2025-09-09T10:13:04.356Z",
+        "data": [
+            {
+                "productId": "68bffdb05012d0c33cac952a",
+                "name": "brown glasses",
+                "category": "Optics",
+                "price": 77,
+                "stock": 90,
+                "description": "{\"caption\": \"the glasses are made from titanium and have a matt finish\"}",
+                "manufacturer": "rayban",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kkkkk",
+                "batchNo": "09996",
+                "imageUrl": "/uploads/1757412784339-Image.jpeg",
+                "savedAt": "2025-09-09T10:13:04.355Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000439423b27da0c946bcbf2def40e4a3ccb9c05bab588a14b6fa9562d3da23",
+        "nonce": 115537,
+        "miningTimeMs": 243,
+        "hash": "0000dd27cd65c2325e5c5e0789dcd43074fb4402b4095aa1be38fdecbbbf172f"
+    },
+    {
+        "index": 28,
+        "timestamp": "2025-09-09T10:18:02.925Z",
+        "data": [
+            {
+                "productId": "68bffdb05012d0c33cac952a",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:13:49.440Z"
+            },
+            {
+                "productId": "68bfedf95012d0c33cac9524",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:14.776Z"
+            },
+            {
+                "productId": "68bd71f929ee6fcfe9fb9461",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:18.458Z"
+            },
+            {
+                "productId": "68befb4812ea90084d52c470",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:21.118Z"
+            },
+            {
+                "productId": "68beff9c12ea90084d52c478",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:23.874Z"
+            },
+            {
+                "productId": "68beffdd12ea90084d52c47d",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:26.543Z"
+            },
+            {
+                "productId": "68bf02e712ea90084d52c488",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:29.207Z"
+            },
+            {
+                "productId": "68bfea12c23f294cf73f36e2",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:40.144Z"
+            },
+            {
+                "productId": "68bfe8c8c23f294cf73f36da",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:45.223Z"
+            },
+            {
+                "productId": "68bfea5dc23f294cf73f36e7",
+                "action": "deleted",
+                "deletedAt": "2025-09-09T10:15:48.094Z"
+            },
+            {
+                "productId": "68bffeda5012d0c33cac9596",
+                "name": "green glasses",
+                "category": "Optics",
+                "price": 90,
+                "stock": 90,
+                "description": "{\"caption\": \"a pair of glasses on a green surface\"}",
+                "manufacturer": "jja",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kkk",
+                "batchNo": "90",
+                "imageUrl": "/uploads/1757413082912-download (2).jpeg",
+                "savedAt": "2025-09-09T10:18:02.925Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000dd27cd65c2325e5c5e0789dcd43074fb4402b4095aa1be38fdecbbbf172f",
+        "nonce": 43543,
+        "miningTimeMs": 218,
+        "hash": "00000b27eb6a7aa38763ecf392e51377ec3c8f50f8a63b0415a5605abe92eb61"
+    },
+    {
+        "index": 29,
+        "timestamp": "2025-09-09T19:01:36.855Z",
+        "data": [
+            {
+                "productId": "68c079903d9a6bfdb88d6638",
+                "name": "orange shirt",
+                "category": "Clothing",
+                "price": 9,
+                "stock": 90,
+                "description": "{\"caption\": \"an orange t - shirt\"}",
+                "manufacturer": "lv",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "900900",
+                "imageUrl": "/uploads/1757444496826-images (1).jpeg",
+                "savedAt": "2025-09-09T19:01:36.855Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00000b27eb6a7aa38763ecf392e51377ec3c8f50f8a63b0415a5605abe92eb61",
+        "nonce": 101062,
+        "miningTimeMs": 227,
+        "hash": "0000da0e2f1d436d4ac8db76ca39f96865b2cb667babe99268a8ee86c93e63c7"
+    },
+    {
+        "index": 30,
+        "timestamp": "2025-09-09T19:03:37.796Z",
+        "data": [
+            {
+                "productId": "68c07a093d9a6bfdb88d663d",
+                "name": "fine water bottle",
+                "category": "Beverage",
+                "price": 89,
+                "stock": 90,
+                "description": "{\"caption\": \"a bottle of water with the word fine on it\"}",
+                "manufacturer": "fine",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "9000",
+                "imageUrl": "/uploads/1757444617771-r-fine-10.jpg",
+                "savedAt": "2025-09-09T19:03:37.796Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000da0e2f1d436d4ac8db76ca39f96865b2cb667babe99268a8ee86c93e63c7",
+        "nonce": 45834,
+        "miningTimeMs": 131,
+        "hash": "00008629fd479335edbfcc65d0d26e30faf406ba4f8311bbaf3472628bb12dca"
+    },
+    {
+        "index": 31,
+        "timestamp": "2025-09-09T19:06:33.249Z",
+        "data": [
+            {
+                "productId": "68c07ab93d9a6bfdb88d6642",
+                "name": "a bottle",
+                "category": "Beverage",
+                "price": 89,
+                "stock": 90,
+                "description": "{\"caption\": \"a bottle of coca cola\"}",
+                "manufacturer": "Coca Cola",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "9000",
+                "imageUrl": "/uploads/1757444793226-download (4).jpeg",
+                "savedAt": "2025-09-09T19:06:33.249Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "00008629fd479335edbfcc65d0d26e30faf406ba4f8311bbaf3472628bb12dca",
+        "nonce": 55439,
+        "miningTimeMs": 147,
+        "hash": "0000678ea617ce0146663883f8537fe80ed16a0141d85886130d7ca71135d0d0"
+    },
+    {
+        "index": 32,
+        "timestamp": "2025-09-09T20:46:31.430Z",
+        "data": [
+            {
+                "productId": "68c09227e21e5e1a4baed640",
+                "name": "nike red shoes",
+                "category": "Apparel",
+                "price": 90,
+                "stock": 190,
+                "description": "a pair of red and white shoes on a red background",
+                "manufacturer": "nike",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "nike kl",
+                "batchNo": "9909",
+                "imageUrl": "/uploads/1757450791403-download (3).jpeg",
+                "savedAt": "2025-09-09T20:46:31.430Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "0000678ea617ce0146663883f8537fe80ed16a0141d85886130d7ca71135d0d0",
+        "nonce": 25671,
+        "miningTimeMs": 83,
+        "hash": "000017894efea8075a805ce71047a3e0cd2f82143af490f54470923367db83d2"
+    },
+    {
+        "index": 33,
+        "timestamp": "2025-09-09T21:38:44.392Z",
+        "data": [
+            {
+                "productId": "68c09e64e21e5e1a4baed645",
+                "name": "gucci glasses",
+                "category": "Optics",
+                "price": 99,
+                "stock": 90,
+                "description": "a pair of glasses on a green surface",
+                "manufacturer": "guccccci",
+                "manufacturedAt": "2025-09-09",
+                "sellingLocation": "kl",
+                "batchNo": "098",
+                "imageUrl": "/uploads/1757453924326-download (2).jpeg",
+                "savedAt": "2025-09-09T21:38:44.392Z",
+                "action": "added"
+            }
+        ],
+        "previousHash": "000017894efea8075a805ce71047a3e0cd2f82143af490f54470923367db83d2",
+        "nonce": 4989,
+        "miningTimeMs": 46,
+        "hash": "0000631baeabfebb2a0ddbd74de41eecde473924223aed273d9f9fbe14e6a22c"
     }
 ]
