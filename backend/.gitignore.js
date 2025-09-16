@@ -1,21 +1,63 @@
-# Node.js
+# -----------------------
+# Node.js / Backend
+# -----------------------
 node_modules/
-.env
 npm-debug.log
+yarn-error.log
+.env
+.env.local
+.env.*.local
+.DS_Store
 
 # Logs
 *.log
+logs/
+pids/
+*.pid
+*.seed
+*.pid.lock
 
+# -----------------------
+# Frontend / Build
+# -----------------------
+dist/
+build/
+*.cache
+*.tmp
+
+# -----------------------
 # OS files
+# -----------------------
 .DS_Store
 Thumbs.db
 
-# IDE files
+# -----------------------
+# IDE / Editor
+# -----------------------
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.bak
 
-# Frontend build (if any)
-dist/
-build/
-# Ignore .env files
+# -----------------------
+# Misc / Temporary
+# -----------------------
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.backup
+*.orig
+*.old
+*.rej
+
+# -----------------------
+# Ignore .env files (important for secrets)
+# -----------------------
 *.env
+*.env.*
